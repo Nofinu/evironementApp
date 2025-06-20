@@ -40,6 +40,7 @@ public class Observation {
 
     public ObservationDtoResponse entityToDto (){
         return ObservationDtoResponse.builder()
+                .id(this.getId())
                 .observerName(this.getObserverName())
                 .location(this.getLocation())
                 .latitude(this.getLatitude())

@@ -14,15 +14,15 @@ import java.util.List;
 
 public class ObservationController {
 
-    private ObservationService observationService;
+    private final ObservationService observationService;
 
     public ObservationController(ObservationService observationService) {
         this.observationService = observationService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<ObservationDtoResponse>> getAll (){
-        return ResponseEntity.ok(observationService.get());
+    @GetMapping()
+    public ResponseEntity<List<ObservationDtoResponse>> getAll (@RequestParam int pageSize, @RequestParam int pageNumber){
+        return ResponseEntity.ok(observationService.get(pageSize,pageNumber));
     }
 
     @PostMapping

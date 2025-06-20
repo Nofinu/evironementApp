@@ -13,15 +13,15 @@ import java.util.List;
 @RequestMapping("api/specie")
 public class SpecieController {
 
-    private SpecieService specieService;
+    private final SpecieService specieService;
 
     public SpecieController(SpecieService specieService) {
         this.specieService = specieService;
     }
 
     @GetMapping
-    public ResponseEntity<List<SpecieDtoResponse>> getSpecies (){
-        return ResponseEntity.ok(specieService.get());
+    public ResponseEntity<List<SpecieDtoResponse>> getSpecies (@RequestParam int pageSize, @RequestParam int pageNumber){
+        return ResponseEntity.ok(specieService.get(pageSize,pageNumber));
     }
 
     @GetMapping("/{id}")
