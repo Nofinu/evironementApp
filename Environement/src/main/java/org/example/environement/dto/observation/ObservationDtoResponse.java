@@ -18,7 +18,7 @@ public class ObservationDtoResponse {
     private long id;
     private String observerName;
     private String location;
-    private Double latitude,longitude;
+    private String geoJsonUrl;
     private LocalDate observationDate;
     private String comment;
     private SpecieDtoResponse specie;
