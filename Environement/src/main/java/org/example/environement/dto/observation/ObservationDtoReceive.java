@@ -31,7 +31,7 @@ public class ObservationDtoReceive {
 
     public Observation dtoToEntity (SpecieRepository specieRepository){
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return Observation.builder()
+        Observation observationCreated = Observation.builder()
                 .observerName(this.getObserverName())
                 .location(this.getLocation())
                 .latitude(this.getLatitude())
@@ -41,5 +41,8 @@ public class ObservationDtoReceive {
                 .specie(specieRepository.findById(this.getSpecieId()).orElseThrow(NotFoundException::new))
                 .travellogs(this.getTravellogs().stream().map(TravellogDtoReceive::dtoToEntity).collect(Collectors.toList()))
                 .build();
+
+        observationCreated.getTravellogs().forEach(t -> t.setObservation(observationCreated));
+        return observationCreated;
     }
 }
