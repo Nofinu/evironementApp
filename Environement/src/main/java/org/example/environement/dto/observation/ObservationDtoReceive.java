@@ -31,15 +31,18 @@ public class ObservationDtoReceive {
 
     public Observation dtoToEntity (SpecieRepository specieRepository){
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return Observation.builder()
+        Observation observationCreated = Observation.builder()
                 .observerName(this.getObserverName())
                 .location(this.getLocation())
-                .longitude(this.getLongitude())
                 .latitude(this.getLatitude())
+                .longitude(this.getLongitude())
                 .observationDate(LocalDate.parse(this.getObservationDateStr(),format))
                 .comment(this.getComment())
                 .specie(specieRepository.findById(this.getSpecieId()).orElseThrow(NotFoundException::new))
                 .travellogs(this.getTravellogs().stream().map(TravellogDtoReceive::dtoToEntity).collect(Collectors.toList()))
                 .build();
+
+        observationCreated.getTravellogs().forEach(t -> t.setObservation(observationCreated));
+        return observationCreated;
     }
 }
